@@ -15,9 +15,9 @@ r = requests.get(url)
 config = r.json()
 base_url = config['images']['base_url']
 sizes = config['images']['poster_sizes']
-max_size='w300'
+max_size='w500'
 movieList=[]
-movieFolder="/media/venkatraman/movie-test"
+movieFolder="/home/venkat/movie_test"
 temp_path=""
 
 def get_path(ui):
@@ -57,7 +57,7 @@ def getMovieList():
                 file_list.append(filename)
     return file_list 
 def set_movie(ui):
-    moviename=str(ui.lineEdit_5.text()).lower()
+    moviename=str(ui.listView.currentItem().text()).lower()
     global movieList
     global base_url
     global max_size
@@ -68,42 +68,58 @@ def set_movie(ui):
             break
     res_print_text_list=[]
     if "resolution" in movieInfo.keys():
-        res_print_text_list.append(movieInfo["resolution"])
+        res_print_text_list.append("Quality - " + movieInfo["resolution"])
+    else:
+        res_print_text_list.append("No Quality Info")
     if "quality" in movieInfo.keys():
         res_print_text_list.append(movieInfo["quality"])
     resPrintText=' '.join(res_print_text_list)
-    ui.lineEdit_3.setText(QtCore.QString(str(movieInfo["year"])))
+    ui.lineEdit_3.setText(QtCore.QString("Year - " + str(movieInfo["year"])))
     ui.lineEdit_2.setText(QtCore.QString(resPrintText))
     #Poster Code
-    image_req = 'http://api.themoviedb.org/3/movie/{imdbid}/images?api_key={key}' 
-    imdb_id=imdb_id_from_title(movieInfo["title"])
-    r = requests.get(image_req.format(key=api_key,imdbid=imdb_id))
-    api_response = r.json()
-    posters = api_response['posters']
-    poster_urls = []
-    for poster in posters:
-        rel_path = poster['file_path']
-        url = "{0}{1}{2}".format(base_url, max_size, rel_path)
-        poster_urls.append(url)
-    url=poster_urls[0]
-    r = requests.get(url)
-    filetype = r.headers['content-type'].split('/')[-1]
-    filename = 'posters/poster_{0}.{1}'.format(imdb_id,filetype) 
-    with open(filename,'wb') as w:
-        w.write(r.content)
-    ui.label_2.setPixmap(QtGui.QPixmap(os.getcwd() + "/posters/" + "poster_" + imdb_id + '.' + filetype))    
-def displayList():
+    if "imdbid" not in movieInfo.keys():
+        imdb_id=imdb_id_from_title(movieInfo["title"])
+        movieInfo["imdbid"]=imdb_id
+    else:
+        imdb_id=movieInfo["imdbid"]
+    if not os.path.isfile("posters/poster_" + imdb_id + ".jpeg"):
+        ui.label_2.setText("Downloading...")
+        image_req = 'http://api.themoviedb.org/3/movie/{imdbid}/images?api_key={key}' 
+        r = requests.get(image_req.format(key=api_key,imdbid=imdb_id))
+        api_response = r.json()
+        posters  = api_response['posters']
+        poster_urls = []
+        for poster in posters:
+            rel_path = poster['file_path']
+            url = "{0}{1}{2}".format(base_url, max_size, rel_path)
+            poster_urls.append(url)
+        url=poster_urls[0]
+        r = requests.get(url)
+        filetype = r.headers['content-type'].split('/')[-1]
+        filename = 'posters/poster_{0}.{1}'.format(imdb_id,filetype) 
+        with open(filename,'wb') as w:
+            w.write(r.content)
+    ui.label_2.setPixmap(QtGui.QPixmap(os.getcwd() + "/posters/" + "poster_" + imdb_id + '.jpeg'))    
+def displayList(mode="display",search_string=""):
     movies=getMovieList()
+    if mode=="search" and search_string=="":
+        mode="display"
     global movieList
-    model = QtGui.QStandardItemModel(ui.listView)
+    ui.listView.clear()
     for movie in movies:
         movieInfo = ptn.parse(movie)
-        movie=movieInfo["title"]
+        movie=movieInfo["title"].title()
         movieList.append(movieInfo)
-        item = QtGui.QStandardItem(movie)
-        item.setCheckable(True)
-        model.appendRow(item)
-    ui.listView.setModel(model)
+        itemString = QtCore.QString(movie)
+        item = QtGui.QListWidgetItem(itemString)
+        if mode=="search":
+            if search_string in movieInfo["title"].lower():
+                ui.listView.addItem(item)
+        else:
+            ui.listView.addItem(item)
+
+def printer():
+    print "Yo mama"
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
     Form = QtGui.QWidget()
@@ -113,7 +129,8 @@ if __name__ == "__main__":
     ui.pushButton_5.clicked.connect(displayList)
     ui.pushButton_2.clicked.connect(lambda: get_path(ui))
     ui.toolButton.clicked.connect(lambda: set_path(ui))
-    ui.pushButton.clicked.connect(lambda: set_movie(ui))
+    ui.pushButton.clicked.connect(lambda: displayList(mode="search",search_string=str(ui.lineEdit_5.text).lower()))
+    ui.listView.itemSelectionChanged.connect(lambda: set_movie(ui))
     Form.show()
     displayList()
     sys.exit(app.exec_())

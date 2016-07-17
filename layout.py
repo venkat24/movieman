@@ -2,8 +2,7 @@
 
 # Form implementation generated from reading ui file 'template.ui'
 #
-# Created: Thu Jul 14 23:34:57 2016
-#      by: PyQt4 UI code generator 4.10.4
+# Created by: PyQt4 UI code generator 4.11.4
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -26,7 +25,7 @@ except AttributeError:
 class Ui_Form(object):
     def setupUi(self, Form):
         Form.setObjectName(_fromUtf8("Form"))
-        Form.resize(826, 674)
+        Form.resize(826, 697)
         self.verticalLayout_2 = QtGui.QVBoxLayout(Form)
         self.verticalLayout_2.setObjectName(_fromUtf8("verticalLayout_2"))
         self.verticalLayout = QtGui.QVBoxLayout()
@@ -110,14 +109,7 @@ class Ui_Form(object):
         self.pushButton.setObjectName(_fromUtf8("pushButton"))
         self.horizontalLayout_5.addWidget(self.pushButton)
         self.verticalLayout_4.addLayout(self.horizontalLayout_5)
-        self.listView = QtGui.QListView(self.tab)
-        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.listView.sizePolicy().hasHeightForWidth())
-        self.listView.setSizePolicy(sizePolicy)
-        self.listView.setEditTriggers(QtGui.QAbstractItemView.NoEditTriggers)
-        self.listView.setAlternatingRowColors(True)
+        self.listView = QtGui.QListWidget(self.tab)
         self.listView.setObjectName(_fromUtf8("listView"))
         self.verticalLayout_4.addWidget(self.listView)
         self.label_3 = QtGui.QLabel(self.tab)

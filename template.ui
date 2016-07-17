@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>826</width>
-    <height>674</height>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -147,20 +147,7 @@
               </layout>
              </item>
              <item>
-              <widget class="QListView" name="listView">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="editTriggers">
-                <set>QAbstractItemView::NoEditTriggers</set>
-               </property>
-               <property name="alternatingRowColors">
-                <bool>true</bool>
-               </property>
-              </widget>
+              <widget class="QListWidget" name="listView"/>
              </item>
              <item>
               <widget class="QLabel" name="label_3">
