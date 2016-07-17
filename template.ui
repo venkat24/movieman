@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>826</width>
-    <height>697</height>
+    <width>845</width>
+    <height>771</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -72,17 +72,26 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
+                 <property name="toolTip">
+                  <string>Movie posters will be displayed here.</string>
+                 </property>
                  <property name="frameShape">
                   <enum>QFrame::Panel</enum>
                  </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Plain</enum>
+                 </property>
+                 <property name="lineWidth">
+                  <number>1</number>
+                 </property>
                  <property name="text">
-                  <string>Movie Poster not Available</string>
+                  <string>Select a Movie --&gt;</string>
                  </property>
                  <property name="textFormat">
                   <enum>Qt::AutoText</enum>
                  </property>
                  <property name="scaledContents">
-                  <bool>false</bool>
+                  <bool>true</bool>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignCenter</set>
@@ -135,11 +144,7 @@
                    <verstretch>0</verstretch>
                   </sizepolicy>
                  </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="pushButton">
-                 <property name="text">
+                 <property name="placeholderText">
                   <string>Search</string>
                  </property>
                 </widget>
@@ -147,28 +152,9 @@
               </layout>
              </item>
              <item>
-              <widget class="QListWidget" name="listView"/>
-             </item>
-             <item>
-              <widget class="QLabel" name="label_3">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="text">
-                <string>Movies Loaded</string>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="pushButton_8">
-               <property name="text">
-                <string>Load Movie</string>
+              <widget class="QListWidget" name="listView">
+               <property name="frameShape">
+                <enum>QFrame::NoFrame</enum>
                </property>
               </widget>
              </item>
@@ -197,16 +183,25 @@
           <attribute name="title">
            <string>Configuration</string>
           </attribute>
-          <layout class="QHBoxLayout" name="horizontalLayout_3">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
             <layout class="QHBoxLayout" name="horizontalLayout_2">
+             <property name="sizeConstraint">
+              <enum>QLayout::SetDefaultConstraint</enum>
+             </property>
              <item>
               <widget class="QLineEdit" name="lineEdit">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
                <property name="inputMask">
                 <string/>
                </property>
                <property name="placeholderText">
-                <string notr="true"/>
+                <string notr="true">Set Movie Folder</string>
                </property>
               </widget>
              </item>
@@ -225,6 +220,101 @@
               </widget>
              </item>
             </layout>
+           </item>
+           <item>
+            <widget class="Line" name="line_2">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_4">
+             <item>
+              <widget class="QComboBox" name="comboBox">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="currentIndex">
+                <number>2</number>
+               </property>
+               <item>
+                <property name="text">
+                 <string>Low</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Medium</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>High (Default)</string>
+                </property>
+               </item>
+               <item>
+                <property name="text">
+                 <string>Massive</string>
+                </property>
+               </item>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton">
+               <property name="text">
+                <string>Set Poster Quality</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_12">
+             <item>
+              <widget class="QLabel" name="label_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="text">
+                <string>Size Error</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_4">
+               <property name="text">
+                <string>Refresh Cache Size</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_3">
+               <property name="text">
+                <string>Clear Poster Cache</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>531</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </widget>
